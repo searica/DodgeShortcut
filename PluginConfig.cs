@@ -12,7 +12,7 @@ namespace DodgeButton
         private const string MechanicsName = "Hotkey";
         public static ConfigEntry<bool> IsModEnabled { get; private set; }
 
-        public static ConfigEntry<KeyboardShortcut> DodgeShortut;
+        public static ConfigEntry<KeyCode> DodgeShortut;
 
         private static readonly AcceptableValueList<bool> AcceptableToggleValuesList = new(new bool[] { false, true });
 
@@ -45,8 +45,8 @@ namespace DodgeButton
 
             DodgeShortut = BindConfig(
                 MechanicsName, 
-                "DodgeButton",
-                new KeyboardShortcut(KeyCode.LeftAlt, new KeyCode[0]),
+                "DodgeShortcut",
+                KeyCode.LeftAlt,
                 "Set the key to press to dodge in the direction your character is moving." +
                 "\nIf LeftAlt conflicts with other mods, I recommend setting the dodge key to the back button on your mouse."
              );

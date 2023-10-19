@@ -14,7 +14,9 @@ namespace DodgeButton
         {
             if (Player.m_localPlayer == null)
             {
-                Log.LogWarning("Local player is null.");
+#if DEBUG
+                Log.LogInfo("Local player is null.");
+#endif
                 return;
             }
             
@@ -35,11 +37,19 @@ namespace DodgeButton
                 return;
             }
             
-            if (PluginConfig.DodgeShortut.Value.IsDown())
+            if (Input.GetKeyDown(PluginConfig.DodgeShortut.Value))
             {
                 Vector3 dodgeDir = Player.m_localPlayer.m_moveDir;
                 dodgeDir.y = 0f;
-                dodgeDir = dodgeDir.normalized;
+                if (dodgeDir.magnitude < 0.1f)
+                {
+                    dodgeDir = Player.m_localPlayer.m_lookDir;
+                    dodgeDir.y = 0f;   
+                }
+                dodgeDir.Normalize();
+#if DEBUG
+                Log.LogInfo($"Dodge Vector: {dodgeDir}");
+#endif
                 Player.m_localPlayer.Dodge(dodgeDir);
             }
         }

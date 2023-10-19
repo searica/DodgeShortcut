@@ -20,22 +20,18 @@
     <TargetFramework>net481</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);DefineConstants</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="CHANGELOG.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="CHANGELOG.md" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Libs\" />
+    <Folder Include="Publish\Nexus\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -58,6 +54,9 @@
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
 		<HintPath>$(CorLibPath)\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(CorLibPath)\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
