@@ -5,13 +5,25 @@ Simple Valheim mod to add a configurable dodge button. Allows you to dodge with 
 Inspired by [1-Key Dodge](https://www.nexusmods.com/valheim/mods/424) mod on Nexus. This mod is written from scratch though as there is no code available for 1-Key Dodge and no specific license for it.
 
 ## Useage
-Install the mod, run the game once to create the configuration file, then 
+- Install the mod using either r2modman or thunderstore mod manager.
+- Run the game once to create the configuration file.
+- Either use an in-game configuration manager to edit the default key-bind for dodging or edit the configuration file using your mod manager.
+- Press the configured dodge key to dodge in the direction your character is moving, or if they are standing still then the direction your camera is looking.
+
+### Configuration
+**EnableMod** [Restart Required]
+- Globally enable or disable this mod.
+- Default value: true
+
+**DodgeShortcut**
+- Set the key to press to dodge in the direction your character is moving. If LeftAlt conflicts with other mods, I recommend setting the dodge key to the back button on your mouse.
+- Default value: LeftAlt       
 
 ## Compatibility
 Likely compatiable with most mods as it touches very little of the game's code. May conflict with other mods that allow for custom inputs when dodging.
 
 ### Source Code
-Github: https://github.com/searica/MoreVanillaBuildPrefabs
+Github: https://github.com/searica/DodgeShortcut
 
 ## Donations/Tips
 My mods will always be free to use but if you feel like saying thanks you can tip/donate here: https://ko-fi.com/searica
