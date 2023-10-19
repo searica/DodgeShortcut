@@ -4,7 +4,7 @@ Simple Valheim mod to add a configurable dodge button. Allows you to dodge with 
 ### Acknowledgements
 Inspired by [1-Key Dodge](https://www.nexusmods.com/valheim/mods/424) mod on Nexus. This mod is written from scratch though as there is no code available for 1-Key Dodge and no specific license for it.
 
-## Useage
+## Usage
 - Install the mod using either r2modman or thunderstore mod manager.
 - Run the game once to create the configuration file.
 - Either use an in-game configuration manager to edit the default key-bind for dodging or edit the configuration file using your mod manager.

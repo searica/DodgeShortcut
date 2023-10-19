@@ -13,7 +13,7 @@ namespace DodgeButton
         public const string PluginName = "DodgeShortcut";
         internal const string Author = "Searica";
         public const string PluginGuid = $"{Author}.Valheim.{PluginName}";
-        public const string PluginVersion = "1.0.4";
+        public const string PluginVersion = "1.0.5";
 
         Harmony _harmony;
         public void Awake()
