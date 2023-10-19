@@ -12,7 +12,7 @@ namespace DodgeButton
         private const string MechanicsName = "Hotkey";
         public static ConfigEntry<bool> IsModEnabled { get; private set; }
 
-        public static ConfigEntry<KeyboardShortcut> DodgeKey;
+        public static ConfigEntry<KeyboardShortcut> DodgeShortut;
 
         private static readonly AcceptableValueList<bool> AcceptableToggleValuesList = new(new bool[] { false, true });
 
@@ -43,7 +43,7 @@ namespace DodgeButton
                 )
              );
 
-            DodgeKey = BindConfig(
+            DodgeShortut = BindConfig(
                 MechanicsName, 
                 "DodgeButton",
                 new KeyboardShortcut(KeyCode.LeftAlt, new KeyCode[0]),

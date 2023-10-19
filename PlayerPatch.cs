@@ -10,7 +10,6 @@ namespace DodgeButton
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Player.Update))]
-        
         private static void DodgePatch()
         {
             if (Player.m_localPlayer == null)
@@ -19,9 +18,11 @@ namespace DodgeButton
                 return;
             }
             
+            // want to make sure we don't dodge if sitting in a chair?
+            // piloting a ship, or holding the mast of the ship?
             if (
                 Player.m_localPlayer.IsTeleporting() 
-                || Player.m_localPlayer.IsAttachedToShip() 
+                || Player.m_localPlayer.IsAttachedToShip()  // I think this is if you're piloting?
                 || Player.m_localPlayer.InPlaceMode() 
                 || Console.instance.m_chatWindow.gameObject.activeInHierarchy
                 || Chat.instance.m_chatWindow.gameObject.activeInHierarchy 
@@ -33,8 +34,8 @@ namespace DodgeButton
             {
                 return;
             }
-
-            if (Input.GetKeyDown(PluginConfig.DodgeKey.Value.MainKey))
+            
+            if (PluginConfig.DodgeShortut.Value.IsDown())
             {
                 Vector3 dodgeDir = Player.m_localPlayer.m_moveDir;
                 dodgeDir.y = 0f;

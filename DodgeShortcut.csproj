@@ -59,8 +59,5 @@
     <Reference Include="UnityEngine.CoreModule">
 		<HintPath>$(CorLibPath)\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Valheim_Clean\unstripped_corlib\UnityEngine.InputLegacyModule.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>
