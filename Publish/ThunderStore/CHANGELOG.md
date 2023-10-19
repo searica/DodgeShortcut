@@ -1,3 +1,6 @@
+## Version 1.0.4
+Fix BepInEx mod ID.
+
 ## Version 1.0.3
 Update readme.
 

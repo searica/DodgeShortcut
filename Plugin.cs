@@ -10,10 +10,10 @@ namespace DodgeButton
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     public class Plugin : BaseUnityPlugin
     {
-        public const string PluginName = "Plugin";
+        public const string PluginName = "DodgeShortcut";
         internal const string Author = "Searica";
         public const string PluginGuid = $"{Author}.Valheim.{PluginName}";
-        public const string PluginVersion = "1.0.3";
+        public const string PluginVersion = "1.0.4";
 
         Harmony _harmony;
         public void Awake()
