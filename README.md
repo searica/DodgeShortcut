@@ -1,9 +1,6 @@
 # DodgeShortcut
 Simple Valheim mod to add a configurable dodge button. Allows you to dodge with a single key press.
 
-### Acknowledgements
-Inspired by [1-Key Dodge](https://www.nexusmods.com/valheim/mods/424) mod on Nexus. This mod is written from scratch though as there is no code available for 1-Key Dodge and no specific license for it.
-
 ## Usage
 - Install the mod using either r2modman or thunderstore mod manager.
 - Run the game once to create the configuration file.
@@ -26,7 +23,23 @@ Likely compatiable with most mods as it touches very little of the game's code. 
 Github: https://github.com/searica/DodgeShortcut
 
 ## Donations/Tips
-My mods will always be free to use but if you feel like saying thanks you can tip/donate here: https://ko-fi.com/searica
+My mods will always be free to use but if you feel like saying thanks you can tip/donate here through ko-fi: https://ko-fi.com/searica
 
 ### Contributions
-You are welcome to open issues on the Github repository to provide suggestions, feature requests, compatibility issues, and bug reports. Over time I will slowly patch more prefabs and hopefully come up with a more generalizable method of patching them, but if you'd really like a specific prefab to work better just open an issue letting me know. I'm a grad student and have a lot of personal responsibilities on top of that so I can't promise I will respond quickly, but I do intend to maintain and improve the mod in my free time.
+If you would like to provide suggestions, make feature requests, or reports bugs and compatibility issues you can either open an issue on the Github repository or tag me (@searica) with a message on the [Jotunn discord](https://discord.gg/DdUt6g7gyA) or the [Odin Plus discord](https://discord.gg/mbkPcvu9ax).
+
+I'm a grad student and have a lot of personal responsibilities on top of that so I can't promise I will respond quickly, but I do intend to maintain and improve the mod in my free time.
+
+### Credits
+Inspired by [1-Key Dodge](https://www.nexusmods.com/valheim/mods/424) mod on Nexus. This mod is written from scratch though as there is no code available for 1-Key Dodge and no specific license for it.
+
+### Shameless Self Plug (Other Mods By Me)
+If you like this mod you might like some of my other ones.
+
+#### Building Mods
+- [MoreVanillaBuildPrefabs](https://valheim.thunderstore.io/package/Searica/More_Vanilla_Build_Prefabs/)
+- [Extra Snap Points Made Easy](https://valheim.thunderstore.io/package/Searica/Extra_Snap_Points_Made_Easy/)
+
+#### Gameplay Mods
+- [FortifySkillsRedux](https://valheim.thunderstore.io/package/Searica/FortifySkillsRedux/)
+<!--- [DodgeShortcut](https://valheim.thunderstore.io/package/Searica/DodgeShortcut/) -->

@@ -4,7 +4,6 @@ using HarmonyLib;
 using System.Reflection;
 using UnityEngine;
 
-
 namespace DodgeButton
 {
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
@@ -13,9 +12,10 @@ namespace DodgeButton
         public const string PluginName = "DodgeShortcut";
         internal const string Author = "Searica";
         public const string PluginGuid = $"{Author}.Valheim.{PluginName}";
-        public const string PluginVersion = "1.0.5";
+        public const string PluginVersion = "1.0.6";
 
-        Harmony _harmony;
+        private Harmony _harmony;
+
         public void Awake()
         {
             Log.Init(Logger);
