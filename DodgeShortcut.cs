@@ -7,7 +7,7 @@ using UnityEngine;
 namespace DodgeButton
 {
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
-    public class Plugin : BaseUnityPlugin
+    public class DodgeShortcut : BaseUnityPlugin
     {
         public const string PluginName = "DodgeShortcut";
         internal const string Author = "Searica";
