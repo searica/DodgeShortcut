@@ -1,9 +1,9 @@
 ﻿using BepInEx.Configuration;
 using UnityEngine;
 
-namespace DodgeButton
+namespace DodgeShortcut.Configs
 {
-    internal class PluginConfig
+    internal class Config
     {
         private static ConfigFile configFile;
 
@@ -12,7 +12,7 @@ namespace DodgeButton
         private const string MechanicsName = "Hotkey";
         public static ConfigEntry<bool> IsModEnabled { get; private set; }
 
-        public static ConfigEntry<KeyCode> DodgeShortut;
+        public static ConfigEntry<KeyCode> DodgeShortcut;
 
         private static readonly AcceptableValueList<bool> AcceptableToggleValuesList = new(new bool[] { false, true });
 
@@ -22,9 +22,7 @@ namespace DodgeButton
             return configEntry;
         }
 
-
         internal static ConfigEntry<T> BindConfig<T>(string group, string name, T value, string description) => BindConfig(group, name, value, new ConfigDescription(description));
-
 
         public static void Init(ConfigFile config)
         {
@@ -43,8 +41,8 @@ namespace DodgeButton
                 )
              );
 
-            DodgeShortut = BindConfig(
-                MechanicsName, 
+            DodgeShortcut = BindConfig(
+                MechanicsName,
                 "DodgeShortcut",
                 KeyCode.LeftAlt,
                 "Set the key to press to dodge in the direction your character is moving." +

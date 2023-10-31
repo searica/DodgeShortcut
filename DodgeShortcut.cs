@@ -1,10 +1,9 @@
 ﻿using BepInEx;
-using BepInEx.Configuration;
+using BepInEx.Logging;
 using HarmonyLib;
 using System.Reflection;
-using UnityEngine;
 
-namespace DodgeButton
+namespace DodgeShortcut
 {
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     public class DodgeShortcut : BaseUnityPlugin
@@ -12,25 +11,41 @@ namespace DodgeButton
         public const string PluginName = "DodgeShortcut";
         internal const string Author = "Searica";
         public const string PluginGuid = $"{Author}.Valheim.{PluginName}";
-        public const string PluginVersion = "1.0.6";
-
-        private Harmony _harmony;
+        public const string PluginVersion = "1.0.7";
 
         public void Awake()
         {
             Log.Init(Logger);
-            PluginConfig.Init(Config);
-            PluginConfig.SetUpConfig();
-            if (PluginConfig.IsModEnabled.Value)
-            {
-                _harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), harmonyInstanceId: PluginGuid);
-            }
+            Configs.Config.Init(Config);
+            Configs.Config.SetUpConfig();
+            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), harmonyInstanceId: PluginGuid);
         }
 
         public void OnDestroy()
         {
-            PluginConfig.Save();
-            _harmony?.UnpatchSelf();
+            Configs.Config.Save();
         }
+    }
+
+    internal static class Log
+    {
+        internal static ManualLogSource _logSource;
+
+        internal static void Init(ManualLogSource logSource)
+        {
+            _logSource = logSource;
+        }
+
+        internal static void LogDebug(object data) => _logSource.LogDebug(data);
+
+        internal static void LogError(object data) => _logSource.LogError(data);
+
+        internal static void LogFatal(object data) => _logSource.LogFatal(data);
+
+        internal static void LogInfo(object data) => _logSource.LogInfo(data);
+
+        internal static void LogMessage(object data) => _logSource.LogMessage(data);
+
+        internal static void LogWarning(object data) => _logSource.LogWarning(data);
     }
 }

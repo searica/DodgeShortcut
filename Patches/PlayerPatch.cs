@@ -1,7 +1,8 @@
-﻿using HarmonyLib;
+﻿using DodgeShortcut.Configs;
+using HarmonyLib;
 using UnityEngine;
 
-namespace DodgeButton
+namespace DodgeShortcut.Patches
 {
     [HarmonyPatch(typeof(Player))]
     internal class PlayerPatch
@@ -10,6 +11,8 @@ namespace DodgeButton
         [HarmonyPatch(nameof(Player.Update))]
         private static void DodgePatch()
         {
+            if (!Config.IsModEnabled.Value) { return; }
+
             if (Player.m_localPlayer == null)
             {
 #if DEBUG
@@ -35,7 +38,7 @@ namespace DodgeButton
                 return;
             }
 
-            if (Input.GetKeyDown(PluginConfig.DodgeShortut.Value))
+            if (Input.GetKeyDown(Config.DodgeShortcut.Value))
             {
                 Vector3 dodgeDir = Player.m_localPlayer.m_moveDir;
                 dodgeDir.y = 0f;
