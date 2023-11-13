@@ -5,6 +5,16 @@
 			<th align="center">Notes</th>
 		</tr>
 		<tr>
+			<td align="center">1.1.0</td>
+			<td align="left">
+				<ul>
+					<li>Added option to configure default dodge direction when standing still.</li>
+					<li>Updated icon and README.</li>
+					<li>Recompiled against newest Valheim version.</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
 			<td align="center">1.0.7</td>
 			<td align="left">
 				<ul>
