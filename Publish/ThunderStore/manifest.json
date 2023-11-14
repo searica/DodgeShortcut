@@ -1,10 +1,10 @@
 {
   "name": "DodgeShortcut",
   "author": "Searica",
-  "version_number": "1.0.7",
-  "website_url": "https://github.com/searica/DodgeShortcut",
+  "version_number": "1.1.0",
   "description": "Simple mod to add a configurable dodge button. Allows you to dodge with a single key press.",
+  "website_url": "https://discord.gg/sFmGTBYN6n",
   "dependencies": [
-    "denikson-BepInExPack_Valheim-5.4.2200"
+    "denikson-BepInExPack_Valheim-5.4.2202"
   ]
 }

@@ -133,7 +133,7 @@ namespace DodgeShortcut
                 {
                     if (DodgeShortcut.GetDefaultDir() == DodgeDir.CharacterDir)
                     {
-                        dodgeDir = Player.m_localPlayer.transform.rotation * Vector3.one;
+                        dodgeDir = Player.m_localPlayer.transform.rotation * Vector3.forward;
                     }
                     else
                     {
