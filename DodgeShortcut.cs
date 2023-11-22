@@ -19,7 +19,7 @@ namespace DodgeShortcut
     }
 
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
-    public class DodgeShortcut : BaseUnityPlugin
+    internal sealed class DodgeShortcut : BaseUnityPlugin
     {
         public const string PluginName = "DodgeShortcut";
         internal const string Author = "Searica";
@@ -94,7 +94,7 @@ namespace DodgeShortcut
     }
 
     [HarmonyPatch(typeof(Player))]
-    internal class PlayerPatch
+    internal static class PlayerPatch
     {
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Player.Update))]
@@ -171,30 +171,30 @@ namespace DodgeShortcut
 
         #endregion Verbosity
 
-        internal static ManualLogSource _logSource;
+        private static ManualLogSource logSource;
 
         internal static void Init(ManualLogSource logSource)
         {
-            _logSource = logSource;
+            Log.logSource = logSource;
         }
 
-        internal static void LogDebug(object data) => _logSource.LogDebug(data);
+        internal static void LogDebug(object data) => logSource.LogDebug(data);
 
-        internal static void LogError(object data) => _logSource.LogError(data);
+        internal static void LogError(object data) => logSource.LogError(data);
 
-        internal static void LogFatal(object data) => _logSource.LogFatal(data);
+        internal static void LogFatal(object data) => logSource.LogFatal(data);
 
         internal static void LogInfo(object data, LogLevel level = LogLevel.Low)
         {
             if (VerbosityLevel >= level)
             {
-                _logSource.LogInfo(data);
+                logSource.LogInfo(data);
             }
         }
 
-        internal static void LogMessage(object data) => _logSource.LogMessage(data);
+        internal static void LogMessage(object data) => logSource.LogMessage(data);
 
-        internal static void LogWarning(object data) => _logSource.LogWarning(data);
+        internal static void LogWarning(object data) => logSource.LogWarning(data);
 
         internal static void LogGameObject(GameObject prefab, bool includeChildren = false)
         {
