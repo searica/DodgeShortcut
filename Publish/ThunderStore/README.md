@@ -5,7 +5,8 @@ Simple Valheim mod to add a configurable dodge button. Allows you to dodge with 
 - Install the mod using either r2modman or thunderstore mod manager.
 - Run the game once to create the configuration file.
 - Either use an in-game configuration manager to edit the default key-bind for dodging or edit the configuration file using your mod manager.
-- Press the configured dodge key to dodge in the direction your character is moving, or if they are standing still then the direction your camera is looking.
+- While moving, press the configured dodge key to dodge in the direction your character is moving.
+- While standing still press the configured dodge key to dodge in either the direction your character is facing or the direction the camera is pointed (default is the direction your character is facing).
 
 ## Configuration
 Changes made to the configuration settings will be reflected in-game immediately (no restart required). The mod also has a built in file watcher so you can edit settings via an in-game configuration manager (changes applied upon closing the in-game configuration manager) or by changing values in the file via a text editor or mod manager.

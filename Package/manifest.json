@@ -1,7 +1,7 @@
 {
   "name": "DodgeShortcut",
   "author": "Searica",
-  "version_number": "1.1.0",
+  "version_number": "1.2.0",
   "description": "Simple mod to add a configurable dodge button. Allows you to dodge with a single key press.",
   "website_url": "https://discord.gg/sFmGTBYN6n",
   "dependencies": [
