@@ -24,7 +24,7 @@ namespace DodgeShortcut
         public const string PluginName = "DodgeShortcut";
         internal const string Author = "Searica";
         public const string PluginGUID = $"{Author}.Valheim.{PluginName}";
-        public const string PluginVersion = "1.2.0";
+        public const string PluginVersion = "1.3.0";
 
         private static readonly string MainSection = ConfigManager.SetStringPriority("Global", 1);
         private static readonly string MechanicsSection = "Mechanics";
