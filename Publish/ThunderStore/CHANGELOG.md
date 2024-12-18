@@ -5,6 +5,14 @@
 			<th align="center">Notes</th>
 		</tr>
 		<tr>
+			<td align="center">1.3.1</td>
+			<td align="left">
+				<ul>
+					<li>Added a key hint that updates based on your config settings and replaces the Vanilla key hint for how to dodge.</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
 			<td align="center">1.3.0</td>
 			<td align="left">
 				<ul>
