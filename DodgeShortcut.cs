@@ -1,11 +1,14 @@
-﻿using BepInEx;
+﻿using System.Reflection;
+using System;
+using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
-using System.Reflection;
 using UnityEngine;
-using DodgeShortcut.Configs;
 using DodgeShortcut.Extensions;
+using System.Collections.Generic;
+using TMPro;
+
 
 namespace DodgeShortcut
 {
@@ -24,44 +27,47 @@ namespace DodgeShortcut
         public const string PluginName = "DodgeShortcut";
         internal const string Author = "Searica";
         public const string PluginGUID = $"{Author}.Valheim.{PluginName}";
-        public const string PluginVersion = "1.3.0";
+        public const string PluginVersion = "1.3.1";
 
-        private static readonly string MainSection = ConfigManager.SetStringPriority("Global", 1);
+        internal static DodgeShortcut Instance;
+
+        private static readonly string MainSection = "1 - Global";
         private static readonly string MechanicsSection = "Mechanics";
 
-        private static ConfigEntry<bool> ModEnabled;
-        private static ConfigEntry<KeyCode> DodgeKey;
-        private static ConfigEntry<DodgeDir> DefaultDir;
-        internal static bool IsModEnabled => ModEnabled.Value;
+        internal ConfigEntry<bool> ModEnabled;
+        internal ConfigEntry<KeyCode> DodgeKey;
+        internal ConfigEntry<DodgeDir> DefaultDir;
+        internal bool IsModEnabled => ModEnabled.Value;
 
-        internal static KeyCode GetDodgeKey() => DodgeKey.Value;
+        internal KeyCode GetDodgeKey() => DodgeKey.Value;
 
-        internal static DodgeDir GetDefaultDir() => DefaultDir.Value;
+        internal DodgeDir GetDefaultDir() => DefaultDir.Value;
 
         public void Awake()
         {
+            Instance = this;
             Log.Init(Logger);
 
-            ConfigManager.Init(PluginGUID, Config, false);
+            Config.Init(PluginGUID, false);
             SetUpConfig();
-            ConfigManager.SaveOnConfigSet(true);
+            Config.SaveOnConfigSet = true;
 
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), harmonyInstanceId: PluginGUID);
             Game.isModded = true;
 
-            ConfigManager.SetupWatcher();
+            Config.SetupWatcher();
         }
 
-        public static void SetUpConfig()
+        public void SetUpConfig()
         {
-            ModEnabled = ConfigManager.BindConfig(
+            ModEnabled = Config.BindConfig(
                 MainSection,
                 "EnableMod",
                 true,
                 "Globally enable or disable this mod."
              );
 
-            Log.Verbosity = ConfigManager.BindConfig(
+            Log.Verbosity = Config.BindConfig(
                 MainSection,
                 "Verbosity",
                 LogLevel.Low,
@@ -70,7 +76,7 @@ namespace DodgeShortcut
                 "it to this without good reason as it will slow Down your game."
             );
 
-            DodgeKey = ConfigManager.BindConfig(
+            DodgeKey = Config.BindConfig(
                 MechanicsSection,
                 "DodgeShortcut",
                 KeyCode.LeftAlt,
@@ -78,7 +84,8 @@ namespace DodgeShortcut
                 "\nIf LeftAlt conflicts with other mods, I recommend setting the dodge key to the back button on your mouse."
              );
 
-            DefaultDir = ConfigManager.BindConfig(
+
+            DefaultDir = Config.BindConfig(
                 MechanicsSection,
                 "DefaultDodgeDir",
                 DodgeDir.CharacterDir,
@@ -89,18 +96,79 @@ namespace DodgeShortcut
 
         public void OnDestroy()
         {
-            ConfigManager.Save();
+            Config.Save();
         }
     }
 
-    [HarmonyPatch(typeof(Player))]
-    internal static class PlayerPatch
+    [HarmonyPatch]
+    internal static class KeyHintPatches
+    {
+        internal const string CombatHintsName = "CombatHints";
+        internal const string KeyboardHintsName = "Keyboard";
+        internal const string DodgeHintName = "Dodge";
+        internal static readonly HashSet<string> KeepChildNames = new() { "Text", "key_bkg" };
+        internal static GameObject DodgeKeyHint;
+
+
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(KeyHints), nameof(KeyHints.Awake))]
+        internal static void KeyHints_Awake_Postfix(KeyHints __instance)
+        {
+            if (
+                !__instance
+                || !__instance.transform.TryGetChild(CombatHintsName, out Transform combatHints) 
+                || !combatHints.TryGetChild(KeyboardHintsName, out Transform keyBoardHints)
+                || !keyBoardHints.TryGetChild(DodgeHintName, out Transform dodgeHint)
+            )
+            {
+                return;
+            }
+            DodgeKeyHint = dodgeHint.gameObject;
+
+            // Remove everything other than the single key I want.
+            for (int i = DodgeKeyHint.transform.childCount-1; i > -1 ; i--)
+            {
+                var child = DodgeKeyHint.transform.GetChild(i);
+                if (KeepChildNames.Contains(child.name))
+                {
+                    continue;
+                }
+                Log.LogInfo($"Destroying child {child.name} of DodgeKeyHint");
+                GameObject.DestroyImmediate(child.gameObject);
+            }
+            Log.LogInfo("Successfully modified Dodge Key Hint prefab.");
+
+            UpdateDodgeKeyHint();
+            DodgeShortcut.Instance.DodgeKey.SettingChanged += (obj, attr) =>
+            {
+                UpdateDodgeKeyHint();
+            };
+        }
+
+        internal static void UpdateDodgeKeyHint()
+        {
+            if (!DodgeKeyHint 
+                || !DodgeKeyHint.TryGetChild("Key", out Transform keyHint, breadth: false)
+                || !keyHint.TryGetComponent(out TextMeshProUGUI tmpText))
+            {
+                Log.LogWarning("Failed to update Dodge Key Hint!");
+                return;
+            }
+     
+            tmpText.text = DodgeShortcut.Instance.GetDodgeKey().ToString();
+            Log.LogInfo("Updated Dodge Key Hint!");
+        }
+    }
+
+    [HarmonyPatch]
+    internal static class DodgePatches
     {
         [HarmonyPrefix]
-        [HarmonyPatch(nameof(Player.Update))]
+        [HarmonyPatch(typeof(Player), nameof(Player.Update))]
         private static void DodgePatch()
         {
-            if (!DodgeShortcut.IsModEnabled) { return; }
+            if (!DodgeShortcut.Instance.IsModEnabled) { return; }
 
             if (Player.m_localPlayer == null)
             {
@@ -124,14 +192,14 @@ namespace DodgeShortcut
                 return;
             }
 
-            if (Input.GetKeyDown(DodgeShortcut.GetDodgeKey()))
+            if (Input.GetKeyDown(DodgeShortcut.Instance.GetDodgeKey()))
             {
                 Vector3 dodgeDir = Player.m_localPlayer.m_moveDir;
                 dodgeDir.y = 0f;
 
                 if (dodgeDir.magnitude < 0.1f)
                 {
-                    if (DodgeShortcut.GetDefaultDir() == DodgeDir.CharacterDir)
+                    if (DodgeShortcut.Instance.GetDefaultDir() == DodgeDir.CharacterDir)
                     {
                         dodgeDir = Player.m_localPlayer.transform.rotation * Vector3.forward;
                     }
@@ -224,13 +292,28 @@ namespace DodgeShortcut
             PropertyInfo[] properties = compo.GetType().GetProperties(ReflectionUtils.AllBindings);
             foreach (var property in properties)
             {
-                LogInfo($" - {property.Name} = {property.GetValue(compo)}");
+                try
+                {
+                    LogInfo($" - {property.Name} = {property.GetValue(compo)}");
+                }
+                catch (NullReferenceException e)
+                {
+                    LogInfo($" - {property.Name} = null");
+                }
+                
             }
 
             FieldInfo[] fields = compo.GetType().GetFields(ReflectionUtils.AllBindings);
             foreach (var field in fields)
             {
-                LogInfo($" - {field.Name} = {field.GetValue(compo)}");
+                try
+                {
+                    LogInfo($" - {field.Name} = {field.GetValue(compo)}");
+                }
+                catch (NullReferenceException e)
+                {
+                    LogInfo($" - {field.Name} = null");
+                }
             }
         }
     }
